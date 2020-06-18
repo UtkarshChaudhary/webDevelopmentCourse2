@@ -13,7 +13,7 @@
      <div fxFlex>
         <mat-grid-list cols="2" rowHeight="200px">
   <!--(click)="onSelect(dish) on click onselect methd is evoked with dish(of for loop here) as argument-->        
-          <mat-grid-tile *ngFor="let dish of dishes" (click)="onSelect(dish)"> 
+          <mat-grid-tile *ngFor="let dish of dishes" [routerLink]="['/dishdetail', dish.id]"> 
             <img height="200px" src={{dish.image}} alt={{dish.name}}>
             <mat-grid-tile-footer>
               <h1>{{dish.name | uppercase}}</h1>
@@ -22,7 +22,5 @@
           </mat-grid-tile>
         </mat-grid-list>
     </div>
-    <!--this div will  only displayed when selected dish is not null-->
-    <app-dishdetail [dish]="selectedDish"></app-dishdetail>
-
+    
 </div>

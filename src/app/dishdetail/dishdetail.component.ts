@@ -1,6 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 // Input to input details from DOM
 import { Dish } from '../shared/dish';
+import {Params, ActivatedRoute} from '@angular/router';
+// params is used to input router parameter
+import { Location } from '@angular/common';
+//location is used to specify location of page in history of web browser
+import { DishService } from '../services/dish.service';
 
 @Component({
   selector: 'app-dishdetail',
@@ -9,12 +14,20 @@ import { Dish } from '../shared/dish';
 })
 export class DishdetailComponent implements OnInit {
   
-  @Input() // to get this attribute value from DOM
-  dish = Dish;
   
-  constructor() { }
+  dish: Dish;
+  
+  constructor(private dishService: DishService, 
+    private route: ActivatedRoute,
+    private location: Location) { }
 
   ngOnInit() {
+    let id = this.route.snapshot.params['id'];
+    this.dish = this.dishService.getDish(id);
+  }
+
+  goBack(): void {
+      this.location.back();
   }
 
 }
