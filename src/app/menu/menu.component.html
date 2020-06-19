@@ -10,7 +10,7 @@
         </div>
      </div>
      <!--ngFor is angular directive | is pipe uppercase to make text uppercase-->
-     <div fxFlex>
+     <div fxFlex *ngIf="dishes">
         <mat-grid-list cols="2" rowHeight="200px">
   <!--(click)="onSelect(dish) on click onselect methd is evoked with dish(of for loop here) as argument-->        
           <mat-grid-tile *ngFor="let dish of dishes" [routerLink]="['/dishdetail', dish.id]"> 
@@ -21,6 +21,10 @@
             
           </mat-grid-tile>
         </mat-grid-list>
+    </div>
+    <div fxFlex [hidden]="dishes"><!--it is hidden when dish is not null-->
+       <mat-spinner></mat-spinner>
+       <h4>Loading . . please Wait </h4>
     </div>
     
 </div>
