@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core'; //Inject interface is used to inject baseURL
 import { Dish } from "../shared/dish";
 import {DishService} from '../services/dish.service';
 
@@ -11,18 +11,14 @@ import {DishService} from '../services/dish.service';
 export class MenuComponent implements OnInit {
 
   dishes: Dish[] ;  
-  
-  selectedDish: Dish;
 
-  constructor(private dishService: DishService) { }
+  constructor(private dishService: DishService,
+    @Inject('BaseURL') private BaseURL) { } //'BaseURL' is provider we set in app.module
 
   ngOnInit() { // it is executed when the component is created
      this.dishService.getDishes()
      .subscribe((dishes) => this.dishes = dishes); //arrow func is used here
   }
   
-  onSelect(dish: Dish){ //dish parameter of type Dish
-    this.selectedDish = dish;
-  }
 
 }
