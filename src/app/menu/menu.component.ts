@@ -10,14 +10,16 @@ import {DishService} from '../services/dish.service';
 })
 export class MenuComponent implements OnInit {
 
-  dishes: Dish[] ;  
+  dishes: Dish[] ; 
+  errMess: string[]; 
 
   constructor(private dishService: DishService,
     @Inject('BaseURL') private BaseURL) { } //'BaseURL' is provider we set in app.module
 
   ngOnInit() { // it is executed when the component is created
      this.dishService.getDishes()
-     .subscribe((dishes) => this.dishes = dishes); //arrow func is used here
+     .subscribe((dishes) => this.dishes = dishes,
+     errmess => this.errMess = <any>errmess); //arrow func is used here
   }
   
 
