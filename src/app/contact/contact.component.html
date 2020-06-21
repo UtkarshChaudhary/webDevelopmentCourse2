@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <div fxFlex fxFlexOffset="20px" class="form-size">
+  <div fxFlex fxFlexOffset="20px" class="form-size" [hidden]="errMess || feedbackReturned">
     <h3>Send us your Feedback</h3>
     <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
 
@@ -89,6 +89,22 @@
       <button type="submit" mat-button class="background-primary text-floral-white"
       [disabled]="feedbackForm.invalid">Submit</button>
     </form>
+  </div>
+
+  <div fxFlex *ngIf="errMess">
+    <h2>Error</h2>
+    <h4>{{errMess}}</h4>
+  </div>
+
+  <div fxFlex *ngIf="feedbackReturned">
+    <h2>feedback Returned</h2>
+    <p>firstname: {{feedbackReturned.firstname}} </p>
+    <p>lastname: {{feedbackReturned.lastname}}</p>
+    <p>telnum: {{feedbackReturned.telnum}}</p>
+    <p>email: {{feedbackReturned.email}}</p>
+    <p>agree: {{feedbackReturned.agree}}</p>
+    <p>contacttype: {{feedbackReturned.contacttype}}</p>
+    <p>message: {{feedbackReturned.message}}</p>
   </div>
 
 </div>

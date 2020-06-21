@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core'; //ViewChuld to get access of any child element within our DOM
+import { Component, OnInit, ViewChild, Inject } from '@angular/core'; //ViewChuld to get access of any child element within our DOM
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
+import {FeedbackService} from '../services/feedback.service';
 
 @Component({
   selector: 'app-contact',
@@ -11,6 +12,8 @@ export class ContactComponent implements OnInit {
 
   feedbackForm: FormGroup;
   feedback: Feedback;
+  errMess: string[];
+  feedbackReturned: Feedback;
   contactType = ContactType;
 
   @ViewChild('fform') feedbackFormDirective; // to get access of template form for reset it to its initial value
@@ -43,7 +46,9 @@ export class ContactComponent implements OnInit {
     },
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private feedbackService: FeedbackService,
+    @Inject('BaseURL') private BaseURL ) {
     this.createForm();
   }
 
@@ -69,6 +74,13 @@ export class ContactComponent implements OnInit {
   onSubmit() {
     this.feedback = this.feedbackForm.value;
     console.log(this.feedback);
+    this.feedbackService.submitFeedback(this.feedback)
+    .subscribe(feedback => {
+      this.feedbackReturned = feedback;
+    }, errmess => {
+      this.feedbackReturned = null;
+      this.errMess = <any>errmess;
+    });
     this.feedbackForm.reset({ //this object is used by reset method to reset value
       firstname: '',
       lastname: '',
@@ -79,6 +91,10 @@ export class ContactComponent implements OnInit {
       message: '' 
     });
     this.feedbackFormDirective.resetForm();
+    setTimeout(() => { 
+      console.log("setting feedbackReturned to null");
+      this.feedbackReturned = null;
+     }, 10000);
   }
 
   onValueChanged(data?: any) { // ? meaning that parameter is optional

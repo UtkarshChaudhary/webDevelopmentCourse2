@@ -40,6 +40,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {HttpModule} from '@angular/http';
 import {baseURL}  from './shared/baseurl';
 import {ProcessHTTPMsgService} from './services/process-httpmsg.service';
+import {FeedbackService} from './services/feedback.service';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import {ProcessHTTPMsgService} from './services/process-httpmsg.service';
     PromotionService,
     LeaderService,
     ProcessHTTPMsgService,
+    FeedbackService,
     {provide: 'BaseURL', useValue: baseURL}
   ],
   entryComponents: [
